@@ -1,0 +1,31 @@
+.main-outer {
+  text-align: center;
+  padding: 5% 0 0 0;
+}
+
+.image-preview {
+  width: 120px;
+  height: 120px;
+  margin: 0 0 1rem 0;
+}
+
+.image-preview-outer {
+  list-style: none;
+  margin: 0 0 4rem;
+  padding: 0;
+}
+
+.image-preview-outer li {
+    display: inline-block;
+    width: 110px;
+    height: 110px;
+    margin-right: 1rem;
+    cursor: pointer;
+}
+
+.redirect-path {
+  cursor: pointer;
+}
+
+.main-outer .input-box {
+}

@@ -1,0 +1,32 @@
+<div class="main-outer">
+  <div class="form-group input-box">
+    <input id="file-input-prime" name="file" multiple type="file" #file
+    (change)="showPreviewImage($event)" ngModel accept='image/*'/>
+  </div>
+
+  <div class="repeat-window">
+    <ul class="image-preview-outer">
+      <li *ngFor="let url of previewImageArray;let i = index">
+        <img class="image-preview" [src]="url" *ngIf="url" alt="Preview">
+        <button class="btn btn-success" (click)="removeImage(i)" title="Remove image">X</button>
+        <!-- <i class="fa fa-address-book"></i> -->
+      </li>
+    </ul>
+  </div>
+  <button [disabled]="previewImageArray.length == 0" class="btn btn-success" (click)="submit()">Submit</button>
+
+
+  <div>
+    <!-- <a class="redirect-path" (click)="seeUploadedImages()">See Uploaded Images</a>  -->
+    <h3>Uploaded Images</h3>
+    <div class="repeat-window">
+      <ul class="image-preview-outer">
+        <li *ngFor="let img of imgArrayData;let i = index">
+          <img class="image-preview" [src]="img.rel_image_path" 
+          *ngIf="img.rel_image_path" alt="Preview">      
+          <button class="btn btn-danger" (click)="deleteImage(img,i)">Delete</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
