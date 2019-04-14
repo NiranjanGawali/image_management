@@ -8,7 +8,13 @@ var fileData = require('../fileManagement/fileModel').fileData;
 var commonCntr = require('./../commonManagement/commonController');
 var fs = require('fs');
 
-var absolutePath = path.resolve(config.FILE_PATH);
+var devEnv = config.NODE_ENV;
+var absolutePath;
+if(devEnv == 'development') {
+    absolutePath = path.resolve(config.FILE_PATH);
+}else {
+    absolutePath = path.resolve(config.FILE_PATH_PROD);
+}
 
 /* Upload file data */
 router.post('/file', async function (req, res, next) {
@@ -30,9 +36,14 @@ router.post('/file', async function (req, res, next) {
         }
 
         await Promise.all(uploadFileArray.map(async (singleFile) => {
-            let operationStatus = await insertFileToStorage(singleFile);
+            console.log(singleFile);
+            let extension = singleFile.name.split('.').pop();
+            let timeStamp = Math.floor(Date.now() / 1000);
+            let encrypted_image_name = `${timeStamp}.${extension}`;
+            console.log(encrypted_image_name);
+            let operationStatus = await insertFileToStorage(singleFile,encrypted_image_name);
             if (operationStatus)
-                await saveImageData(singleFile.name);
+                await saveImageData(encrypted_image_name,singleFile.name);
 
         }));
 
@@ -42,10 +53,10 @@ router.post('/file', async function (req, res, next) {
         return res.status(400).send({ err:err, status: false });
     }
 
-    async function insertFileToStorage(singleFile) {
+    async function insertFileToStorage(singleFile,img_name) {
         try {
             let insertFilePromise = new Promise((resolve, reject) => {
-                singleFile.mv(`${absolutePath}/${singleFile.name}`, async function (err) {
+                singleFile.mv(`${absolutePath}/${img_name}`, async function (err) {
                     if (err) {
                         logger.error(err);
                         reject(false);
@@ -62,12 +73,13 @@ router.post('/file', async function (req, res, next) {
         }
     }
 
-    async function saveImageData(img_name) {
+    async function saveImageData(encrypted_img_name,img_name) {
         try {
             let newFile = new fileData();
+            newFile.encrypted_image_name = encrypted_img_name;
             newFile.image_name = img_name;
-            newFile.abs_image_path = `${absolutePath}/${img_name}`;
-            newFile.rel_image_path = `assets/${img_name}`;
+            newFile.abs_image_path = `${absolutePath}/${encrypted_img_name}`;
+            newFile.rel_image_path = `assets/${encrypted_img_name}`;
             newFile.save(function (err, data) {
                 if (err) {
                     logger.error(err);

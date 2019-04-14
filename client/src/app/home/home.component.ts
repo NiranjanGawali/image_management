@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HomeService } from './home.service';
 import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -39,6 +40,7 @@ export class HomeComponent implements OnInit {
         }
       } else {
         this.previewImageArray = [];
+        this.imageArray = [];
         alert('Please select only image of type jpg,jpeg and png!');
       }
     }
@@ -75,20 +77,18 @@ export class HomeComponent implements OnInit {
   }
 
 
-  submit() {
-    console.log(this.imageArray);
-    
+  submit(form:NgForm) {
+    console.log(this.imageArray);    
     this.homeService.uploadFile(this.imageArray).then((res) => {
       console.log(res);
+      if(res.status) {
+        this.previewImageArray = [];
+        this.getUploadedImages();
+        form.resetForm()
+      }
     });
-    
+      
   }
-
-
-  // See uploaded images
-  // seeUploadedImages(): void {
-  //   this.router.navigate(['/display']);
-  // }
 
 
   // Get uploaded images

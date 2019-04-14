@@ -1,0 +1,4 @@
+{"errno":-2,"code":"ENOENT","syscall":"open","path":"/var/www/html/image_management_system/client/src/assets/selfdeclaration.jpeg","level":"error"}
+{"errno":-2,"code":"ENOENT","syscall":"open","path":"/var/www/html/image_management_system/client/src/assets/demo.png","level":"error"}
+{"errno":-2,"code":"ENOENT","syscall":"open","path":"/var/www/html/image_management_system/client/src/assets/demo.png","level":"error"}
+{"errors":{"image_name":{"message":"Path `image_name` is required.","name":"ValidatorError","properties":{"message":"Path `image_name` is required.","type":"required","path":"image_name"},"kind":"required","path":"image_name"}},"_message":"fileData validation failed","message":"fileData validation failed: image_name: Path `image_name` is required.","name":"ValidationError","level":"error"}

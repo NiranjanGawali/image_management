@@ -10,5 +10,6 @@ module.exports = {
 	PROJECT_DIR: __dirname,
 	LOGGER: true,
 	CLUSTERING: false,
-	FILE_PATH: process.env.FILE_PATH
+	FILE_PATH: process.env.FILE_PATH,
+	FILE_PATH_PROD: process.env.FILE_PATH_PROD
 }
